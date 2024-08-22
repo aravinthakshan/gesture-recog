@@ -35,6 +35,23 @@ class GestureRecognitionTransformer(VideoTransformerBase):
 
         return img
 
+import streamlit as st
+
+def check_webrtc_support():
+    js = """
+    <script>
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        document.title = "WebRTC Supported";
+    } else {
+        document.title = "WebRTC Not Supported";
+    }
+    </script>
+    """
+    st.components.v1.html(js, height=0)
+    
+    if st.experimental_get_query_params().get("webrtc") == ["Not Supported"]:
+        st.error("Your browser does not support WebRTC. Please try a different browser.")
+
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -55,6 +72,8 @@ def set_background(image_file):
     """
     st.markdown(page_bg_img, unsafe_allow_html=True)
 def main():
+    # Call this function at the beginning of your main() function
+    check_webrtc_support()
     st.set_page_config(layout="wide")
     st.logo('images/mrm-norm.png')
     # Set the background image using the set_background function
