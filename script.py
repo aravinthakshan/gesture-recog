@@ -5,13 +5,14 @@ from mediapipe.tasks.python import vision
 import math
 import streamlit as st
 from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
+import base64
 
 DESIRED_HEIGHT = 480
 DESIRED_WIDTH = 480
 
 class GestureRecognitionTransformer(VideoTransformerBase):
     def __init__(self):
-        self.base_options = python.BaseOptions(model_asset_path='gesture_recognizer.task')
+        self.base_options = python.BaseOptions(model_asset_path='model/gesture_recognizer.task')
         self.options = vision.GestureRecognizerOptions(base_options=self.base_options)
         self.recognizer = vision.GestureRecognizer.create_from_options(self.options)
 
@@ -34,22 +35,54 @@ class GestureRecognitionTransformer(VideoTransformerBase):
 
         return img
 
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+def set_background(image_file):
+    bin_str = get_base64_of_bin_file(image_file)
+    page_bg_img = f"""
+    <style>
+    [data-testid="stAppViewContainer"] > .main {{
+        background-image: url("data:image/png;base64,{bin_str}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    </style>
+    """
+    st.markdown(page_bg_img, unsafe_allow_html=True)
 def main():
     st.set_page_config(layout="wide")
-    def load_css(file_name):
-        with open(file_name) as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    st.logo('images/mrm-norm.png')
+    # Set the background image using the set_background function
+    set_background('images/background-p.jpg')
 
-    load_css("style.css")
-    
-  
+    input_style = """
+    <style>
+    input[type="text"] {
+        background-color: transparent;
+        color: #a19eae;  // This changes the text color inside the input box
+    }
+    div[data-baseweb="base-input"] {
+        background-color: transparent !important;
+    }
+    [data-testid="stAppViewContainer"] {
+        background-color: transparent !important;
+    }
+    </style>
+    """
+    st.title("Mars Rover Manipal - AI Research ")
+    st.markdown(input_style, unsafe_allow_html=True)
+
     col1, col2= st.columns(2)
 
     with col1:
-        st.title("Real-Time Gesture Recognition")
-        st.write("This app shows live webcam feed with gesture recognition, try thumbs up, thumbs down, point up, victory !")
+        st.header("Real-Time Gesture Recognition")
+        st.write("This webapp shows live webcam feed with gesture recognition, try thumbs up, thumbs down, point up and victory!")
         webrtc_streamer(key="gesture-recognition", video_transformer_factory=GestureRecognitionTransformer)
-        
         
     with col2:
         st.write("")
@@ -60,7 +93,8 @@ def main():
         st.write("")
         st.write("")
         st.write("")
-        st.image("logo.png",width = 500,caption="By RESEARCH AI MRM")
+        #st.image("logo.png",width = 450,caption="By RESEARCH AI MRM")
         
 if __name__ == "__main__":
     main()
+
