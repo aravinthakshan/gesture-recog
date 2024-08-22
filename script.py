@@ -60,7 +60,7 @@ def main():
         st.write("")
         st.write("")
         st.write("")
-        st.image("logo.png",width = 450,caption="By RESEARCH AI MRM")
+        st.image("logo.png",width = 500,caption="By RESEARCH AI MRM")
         
 if __name__ == "__main__":
     main()
