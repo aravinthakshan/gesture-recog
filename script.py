@@ -35,11 +35,32 @@ class GestureRecognitionTransformer(VideoTransformerBase):
         return img
 
 def main():
-    st.logo("logo.png")
-    st.title("Real-Time Gesture Recognition")
-    st.write("This app shows live webcam feed with gesture recognition, try thumbs up, thumbs down, point up, and the victory symbol..")
+    st.set_page_config(layout="wide")
+    def load_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-    webrtc_streamer(key="gesture-recognition", video_transformer_factory=GestureRecognitionTransformer)
+    load_css("style.css")
+    
+  
+    col1, col2= st.columns(2)
 
+    with col1:
+        st.title("Real-Time Gesture Recognition")
+        st.write("This app shows live webcam feed with gesture recognition, try thumbs up, thumbs down, point up, victory !")
+        webrtc_streamer(key="gesture-recognition", video_transformer_factory=GestureRecognitionTransformer)
+        
+        
+    with col2:
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.image("logo.png",width = 600,caption="By RESEARCH AI MRM")
+        
 if __name__ == "__main__":
     main()

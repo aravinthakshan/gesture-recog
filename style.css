@@ -1,0 +1,30 @@
+body {
+    background-color: black;
+    color: white; /* Optional: This sets the text color to white for better visibility */
+}
+
+/* Customize specific elements if needed */
+.stApp {
+    background-color: black;
+}
+
+/* Hide the top navbar */
+.css-1y0tads {
+    display: none;
+}
+
+/* Optionally, hide the footer as well */
+.css-1v3fvcr {
+    display: none;
+}
+
+/* Hide or change the color of the top bar */
+.css-1v0mbdj {
+    background-color: black; /* Change this to your desired color */
+}
+
+
+.css-1v0mbdj::before {
+    background: none; /* Removes any gradient */
+    box-shadow: none; /* Removes any shadow */
+}
