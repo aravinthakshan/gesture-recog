@@ -7,7 +7,7 @@ import streamlit as st
 from streamlit_webrtc import VideoTransformerBase, webrtc_streamer
 import base64
 
-DESIRED_HEIGHT = 480
+DESIRED_HEIGHT = 400
 DESIRED_WIDTH = 480
 
 class GestureRecognitionTransformer(VideoTransformerBase):
@@ -58,7 +58,7 @@ def main():
     st.set_page_config(layout="wide")
     st.logo('images/mrm-norm.png')
     # Set the background image using the set_background function
-    set_background('images/background-p.jpg')
+    set_background('images/background-p.png')
 
     input_style = """
     <style>
@@ -74,26 +74,28 @@ def main():
     }
     </style>
     """
-    st.title("Mars Rover Manipal - AI Research ")
     st.markdown(input_style, unsafe_allow_html=True)
 
-    col1, col2= st.columns(2)
+    col1, col2, col3= st.columns(spec = [1,2, 1])
 
     with col1:
-        st.header("Real-Time Gesture Recognition")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.title("Real-Time Gesture Recognition")
         st.write("This webapp shows live webcam feed with gesture recognition, try thumbs up, thumbs down, point up and victory!")
-        webrtc_streamer(key="gesture-recognition", video_transformer_factory=GestureRecognitionTransformer)
+                
         
     with col2:
         st.write("")
         st.write("")
         st.write("")
+        webrtc_streamer(key="gesture-recognition", video_transformer_factory=GestureRecognitionTransformer)
+
+    with col3:
         st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        #st.image("logo.png",width = 450,caption="By RESEARCH AI MRM")
-        
+
+   
 if __name__ == "__main__":
     main()
